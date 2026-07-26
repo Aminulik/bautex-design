@@ -1,0 +1,74 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      FRONTEND_PORT: 3001
+      API_PROXY_TARGET: http://backend:3003
+      REACT_APP_API_URL: http://localhost:3003
+    ports:
+      - '3001:3001'
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3001 >/dev/null 2>&1 || exit 1']
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3003
+      FRONTEND_ORIGIN: http://localhost:3001
+      JWT_SECRET: ${JWT_SECRET:-dev-change-me}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
+      SEGFORMER_API_URL: http://ml:8000/segment/wall
+    ports:
+      - '3003:3003'
+    volumes:
+      - backend-results:/app/results
+      - backend-uploads:/app/uploads
+      - backend-debug:/app/debug
+      - backend-temp:/app/temp
+      - ./server/public/wallpapers:/app/public/wallpapers:ro
+    depends_on:
+      ml:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3003/health >/dev/null 2>&1 || exit 1']
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  ml:
+    build:
+      context: ./ml_service
+      dockerfile: Dockerfile
+    environment:
+      SEGFORMER_MODEL: nvidia/segformer-b0-finetuned-ade-512-512
+    ports:
+      - '8000:8000'
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'python -c "import urllib.request; urllib.request.urlopen(''http://localhost:8000/health'', timeout=5)"',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  backend-results:
+  backend-uploads:
+  backend-debug:
+  backend-temp:
+  hf-cache:

@@ -1,0 +1,335 @@
+/* Основные стили слайдера */
+.slider-container {
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Левая часть - изображение */
+.slider-image-part {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.slider-slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+.slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  will-change: transform;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Правая часть - текст */
+.slider-text-panel {
+  width: 50%;
+  height: 100%;
+  background: rgba(237, 235, 235, 0.95);
+  /* backdrop-filter: blur(40px); - убираем для производительности */
+  padding: 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-content {
+  width: 100%;
+  position: relative;
+}
+
+/* Навигация (стрелки + точки) - НА ПОДЛОЖКЕ СЛАЙДОВ */
+.slider-navigation {
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  display: flex;
+  background: none;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  z-index: 10;
+  padding: 20px 20px;
+}
+
+.slider-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.slider-arrow svg {
+  width: 40px;
+  height: 40px;
+  color: #b84c36;
+}
+
+.slider-arrow.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slider-dots {
+  display: flex;
+  gap: 20px;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba(184, 76, 54, 1);
+}
+
+.slider-dot.active {
+  background: rgba(184, 76, 54, 1);
+  transform: scale(1.2);
+}
+
+/* Стили текстового контента */
+.text-content h1 {
+  font-family: 'Prosto One', sans-serif;
+  font-weight: 400;
+  font-size: clamp(32px, 3vw, 44px);
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: #735234;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.text-content .description,
+.text-content .instruction-text,
+.text-content .final-description {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.5;
+  color: #5b4129;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.instruction-container {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+}
+
+.instruction-text {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.5;
+  color: #5b4129;
+  text-align: center; /* Центрирование текста */
+  width: 100%;
+  min-height: 150px;
+}
+.final-description {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+  font-size: clamp(14px, 1.6vw, 16px); /* Адаптивный размер */
+  line-height: 1.5;
+  color: #5b4129;
+  text-align: left;
+}
+
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.divider-with-text .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #735234;
+}
+
+.divider-with-text span {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 300;
+  font-size: clamp(16px, 1.8vw, 18px);
+  padding: 0 15px;
+  color: #5b4129;
+  white-space: nowrap;
+}
+
+.horizontal-line {
+  width: 100%;
+  height: 1px;
+  background-color: #735234;
+  margin: 20px 0;
+}
+
+.instruction-link {
+  font-weight: 500;
+  text-decoration: underline;
+  color: inherit;
+  transition: color 0.3s;
+}
+
+.instruction-link:hover {
+  color: #b84c36;
+}
+@media (max-width: 1200px) {
+    .slider-container {
+        height: 100vw;
+    }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .slider-container {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
+
+  .slider-image-part,
+  .slider-text-panel {
+    width: 100%;
+    height: auto;
+  }
+    .slider-image-part {
+        height: 45vh;  /* было 50vh — чуть ниже */
+        min-height: 280px;
+        max-height: 400px;
+    }
+
+  .slider-image-part {
+    height: 50vh;
+  }
+
+  .slider-text-panel {
+    padding: 40px 20px;
+    backdrop-filter: none;
+    background: rgba(237, 235, 235, 0.95);
+  }
+
+  .text-content {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .text-content h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .text-content .description,
+  .text-content .instruction-text,
+  .text-content .final-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .instruction-text {
+    min-height: 100px;
+  }
+
+  .slider-arrow {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slider-arrow svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .slider-arrow.prev {
+    left: 25px;
+  }
+
+  .slider-arrow.next {
+    right: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-text-panel {
+    padding-top: 30px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
+    .instruction-text {
+        min-height: 165px;  /* на узких экранах текст выше */
+    }
+    .slider-image-part {
+        height: 35vh;  /* было 50vh — чуть ниже */
+        min-height: 280px;
+        max-height: 400px;
+        position: relative;
+    }
+
+  .text-content h1 {
+    font-size: 28px;
+  }
+  .horizontal-line,
+  .final-description {
+    display: none;
+  }
+
+  .divider-with-text span {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+    .slider-navigation {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        bottom: auto;
+        background: none;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+
+  .slider-arrow {
+    width: 50px;
+    height: 50px;
+      position: static;
+  }
+
+  .slider-arrow svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .slider-dots {
+    display: none;
+  }
+}

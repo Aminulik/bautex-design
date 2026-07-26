@@ -1,0 +1,210 @@
+.features {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background:
+    radial-gradient(circle at 6% 2%, rgba(253, 251, 247, 0.34), transparent 25%),
+    #d8e2dc;
+  color: #536c60;
+  font-family: 'Gothic A1', 'Montserrat', sans-serif;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  border-top: 0.5px solid rgba(83, 108, 96, 0.33);
+  border-left: 0.5px solid rgba(83, 108, 96, 0.25);
+}
+
+.feature-card {
+  position: relative;
+  min-height: clamp(150px, 26.5vw, 240px);
+  padding: clamp(46px, 7.5vw, 76px) clamp(80px, 9vw, 238px) clamp(52px, 5vw, 90px);
+  overflow: hidden;
+  border-right: 0.5px solid rgba(83, 108, 96, 0.3);
+  border-bottom: 0.5px solid rgba(83, 108, 96, 0.33);
+  border-radius: 0 72px 72px 0;
+}
+
+.feature-card:nth-child(2n) {
+  border-radius: 72px 0 0 72px;
+}
+
+.feature-card-wide {
+  grid-column: 1 / -1;
+  min-height: clamp(250px, 23vw, 350px);
+  padding-top: clamp(88px, 7vw, 134px);
+  border-radius: 0;
+}
+
+.feature-card svg {
+  position: absolute;
+  top: clamp(30px, 5vw, 35px);
+  left: 78%;
+  width: clamp(96px, 8.4vw, 142px);
+  height: clamp(96px, 8.4vw, 142px);
+  transform: translateX(-50%);
+  fill: none;
+  stroke: rgba(83, 108, 96, 0.26);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.feature-card:nth-child(2) svg {
+  left: 65%;
+  right: clamp(170px, 17vw, 310px);
+  transform: none;
+}
+
+.feature-card:nth-child(3) svg {
+  left: 70%;
+  right: clamp(60px, 9vw, 146px);
+  transform: rotate(-16deg);
+  opacity: 0.72;
+}
+
+.feature-card:nth-child(4) svg {
+  left: 65%;
+  right: clamp(220px, 20vw, 380px);
+  transform: none;
+}
+
+.feature-card-wide svg {
+  top: clamp(30px, 4.7vw, 70px);
+  left: 70%;
+  transform: none;
+}
+
+.feature-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+}
+
+.feature-card:nth-child(2n) .feature-copy {
+  margin-left: auto;
+}
+
+.feature-card-wide .feature-copy {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.feature-copy h2 {
+  margin: 0 0 clamp(10px, 3vw, 25px);
+  color: #4f695d;
+  font-size: clamp(28px, 2.85vw, 34px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.feature-card-wide .feature-copy h2 {
+  max-width: 1080px;
+  font-size: clamp(30px, 2.85vw, 48px);
+  white-space: normal;
+}
+
+.feature-copy p {
+  margin: 0;
+  color: rgba(83, 108, 96, 0.86);
+  font-size: clamp(18px, 1.22vw, 22px);
+  font-weight: 300;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1180px) {
+  .feature-card {
+    padding-right: clamp(42px, 6vw, 92px);
+    padding-left: clamp(42px, 6vw, 92px);
+  }
+
+  .feature-card:nth-child(2) svg,
+  .feature-card:nth-child(4) svg {
+    right: clamp(70px, 12vw, 170px);
+  }
+
+  .feature-card:nth-child(3) svg {
+    left: 80%;
+    transform: translateX(-60%) rotate(-10deg);
+  }
+
+    .feature-card-wide svg {
+        left: 72%;
+        transform: translateX(-60%) rotate(-10deg);
+    }
+
+  .feature-card-wide .feature-copy h2 {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 820px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card,
+  .feature-card:nth-child(2n),
+  .feature-card-wide {
+    grid-column: auto;
+    min-height: 200px;
+    padding: 50px 24px 30px;
+    border-radius: 0;
+  }
+
+  .feature-card svg,
+  .feature-card:nth-child(2) svg,
+  .feature-card:nth-child(3) svg,
+  .feature-card:nth-child(4) svg,
+  .feature-card-wide svg {
+    top: 24px;
+    right: 22px;
+    left: auto;
+    width: 96px;
+    height: 96px;
+    transform: none;
+  }
+
+  .feature-card:nth-child(2n) .feature-copy,
+  .feature-card-wide .feature-copy {
+    margin-left: 0;
+  }
+
+  .feature-copy {
+    max-width: none;
+  }
+
+  .feature-copy h2 {
+    margin-bottom: 24px;
+    font-size: clamp(22px, 5.6vw, 28px);
+    line-height: 1.12;
+  }
+
+  .feature-card-wide .feature-copy h2 {
+    font-size: clamp(22px, 5.6vw, 28px);
+  }
+
+  .feature-copy p {
+    max-width: 560px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feature-card,
+  .feature-card:nth-child(2n),
+  .feature-card-wide {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .feature-copy h2,
+  .feature-card-wide .feature-copy h2 {
+    font-size: clamp(21px, 5.4vw, 26px);
+  }
+}

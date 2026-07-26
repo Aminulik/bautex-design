@@ -1,0 +1,69 @@
+.dev-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(38, 34, 30, 0.42);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  min-height: 100dvh;
+}
+
+.dev-modal-content {
+  background: var(--surface, #fdfbf7);
+  padding: 34px 36px 32px;
+  border: 0.5px solid rgba(85, 107, 96, 0.22);
+  border-radius: 54px 6px 54px 6px;
+  width: 90%;
+  max-width: 430px;
+  text-align: center;
+  position: relative;
+  color: var(--brand-green-dark, #30493a);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.24);
+  animation: fadeIn 0.2s ease-in;
+}
+
+.dev-modal-content h3 {
+  margin: 0 0 10px;
+  font-family: 'Gothic A1', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.dev-modal-content p {
+  margin: 0;
+  color: var(--brand-green, #556b60);
+  font-family: 'Gothic A1', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.45;
+}
+
+.dev-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.5px solid rgba(85, 107, 96, 0.28);
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.88);
+  color: var(--brand-brown, #735234);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

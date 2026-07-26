@@ -1,0 +1,16 @@
+node_modules
+server/node_modules
+dist
+build
+docs
+.git
+.idea
+.env
+server/.env
+server/orders.db
+server/results
+server/uploads
+server/debug
+server/temp
+lint-report*.txt
+*.log

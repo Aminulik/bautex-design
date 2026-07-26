@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Prosto+One&display=swap');
+
+:root {
+  --page-bg: #f4f2ec;
+  --surface: #fdfbf7;
+  --surface-soft: #e7eee8;
+  --surface-blue: #819bac;
+  --brand-green: #556b60;
+  --brand-green-dark: #30493a;
+  --brand-brown: #735234;
+  --brand-clay: #b8a399;
+  --accent-red: #b84c36;
+  --line-soft: rgba(85, 107, 96, 0.26);
+  --line-light: rgba(253, 251, 247, 0.7);
+  --page-inline: clamp(14px, 3.4vw, 48px);
+  --page-max: 1400px;
+  --page-top-gap: clamp(26px, 3vw, 46px);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--page-bg);
+  color: var(--brand-green-dark);
+  font-family:
+    'Gothic A1',
+    'Montserrat',
+    sans-serif;
+}
+
+body:not(.home-route) {
+  padding-top: var(--header-height, 60px);
+}
+
+body.home-route {
+  padding-top: 0;
+}
+
+@media (max-width: 1024px) {
+  body:not(.home-route) {
+    padding-top: 80px;
+  }
+}
+
+#root,
+.app {
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+main {
+  background: var(--page-bg);
+}
+
+.container {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-inline);
+}
+
+.visualization-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr);
+  gap: 24px;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .visualization-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.ymaps-2-1-79-copyright__logo {
+  display: none !important;
+}
+
+.route-loading {
+  min-height: 40vh;
+  display: grid;
+  place-items: center;
+  color: #31533f;
+  font:
+    600 16px/1.4 'Montserrat',
+    sans-serif;
+}
+
+.account-page {
+  padding-top: var(--page-top-gap);
+  padding-bottom: clamp(64px, 7vw, 110px);
+}
+
+.account-page > h1 {
+  margin: 0 0 10px;
+  color: var(--brand-green-dark);
+  font-family: 'Gothic A1', sans-serif;
+  font-size: clamp(34px, 4.4vw, 64px);
+  font-weight: 500;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.metrics-page {
+  padding-top: var(--page-top-gap);
+  padding-bottom: clamp(64px, 7vw, 110px);
+}
+
+.metrics-page h1 {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 500;
+  line-height: 1.08;
+}

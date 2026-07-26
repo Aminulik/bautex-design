@@ -1,0 +1,200 @@
+/* ========== Базовый контейнер (как в Visualization) ========== */
+.pipeline-container {
+    width: min(var(--page-max, 1400px), calc(100% - (var(--page-inline, 32px) * 2)));
+    max-width: var(--page-max, 1400px);
+    margin: 0 auto;
+    padding: 0 0 clamp(64px, 7vw, 110px);
+}
+
+/* ========== Заголовок ========== */
+.pipeline-title {
+    margin: 0 0 10px;
+    color: var(--brand-green-dark, #30493a);
+    font-family: 'Gothic A1', sans-serif;
+    font-weight: 500;
+    font-size: clamp(34px, 4.4vw, 64px);
+    line-height: 1.05;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+/* ========== Описание ========== */
+.pipeline-description {
+    max-width: 1100px;
+    margin-bottom: 0;
+    padding-top: 15px;
+    border-top: 0.5px solid var(--line-soft, rgba(85, 107, 96, 0.26));
+    color: var(--brand-green, #556b60);
+    font-size: clamp(16px, 1.25vw, 20px);
+    font-weight: 300;
+    line-height: 1.58;
+}
+
+/* ========== Сетка шагов ========== */
+.pipeline-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+/* ========== Карточка шага ========== */
+.pipeline-step-card {
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e0d6cc;
+    background: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pipeline-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pipeline-step-card:nth-child(odd) {
+    background: #fffcf8;
+}
+
+.pipeline-step-card:nth-child(even) {
+    background: #f7f8f4;
+}
+
+/* ========== Номер шага ========== */
+.pipeline-step-number {
+    color: #805b38;
+    font-weight: 700;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========== Заголовок шага ========== */
+.pipeline-step-title {
+    color: #30493a;
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Gothic A1', sans-serif;
+    line-height: 1.3;
+}
+
+/* ========== Текст шага ========== */
+.pipeline-step-text {
+    margin: 0;
+    color: #556b60;
+    line-height: 1.55;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+/* ========== Кнопки (стили как в Visualization) ========== */
+.pipeline-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 0.5px solid rgba(85, 107, 96, 0.26);
+}
+
+.pipeline-button {
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Gothic A1', sans-serif;
+    text-decoration: none;
+}
+
+.pipeline-button-primary {
+    background-color: #4a614d;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(48, 73, 58, 0.15);
+}
+
+.pipeline-button-primary:hover {
+    background-color: #5a736d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(48, 73, 58, 0.25);
+    color: #fff;
+    text-decoration: none;
+}
+
+.pipeline-button-secondary {
+    background-color: #805b38;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(128, 91, 56, 0.15);
+}
+
+.pipeline-button-secondary:hover {
+    background-color: #6e4c2e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(128, 91, 56, 0.25);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ========== Адаптивность ========== */
+@media (max-width: 1024px) {
+    .pipeline-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pipeline-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .pipeline-step-card {
+        padding: 16px;
+    }
+
+    .pipeline-step-title {
+        font-size: 16px;
+    }
+
+    .pipeline-actions {
+        flex-direction: column;
+    }
+
+    .pipeline-button {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pipeline-steps-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .pipeline-title {
+        font-size: 28px;
+    }
+
+    .pipeline-step-title {
+        font-size: 15px;
+    }
+
+    .pipeline-step-text {
+        font-size: 13px;
+    }
+
+    .pipeline-step-number {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,500 @@
+.how-to-paint-page {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--page-bg, #f4f2ec);
+  color: var(--brand-green-dark, #30493a);
+  font-family: 'Gothic A1', sans-serif;
+  line-height: 1.6;
+}
+
+/* Хлебные крошки и заголовок — общий контейнер */
+.video-section {
+  width: min(var(--page-max, 1400px), calc(100% - (var(--page-inline, 32px) * 2)));
+  margin: 0 auto;
+  padding: 4px 0 0;
+}
+
+.how-to-paint-page h1 {
+  margin: 0 0 20px;
+  color: var(--brand-green-dark, #30493a);
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: 500;
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Видео */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 10px;
+  overflow: hidden;
+  border: 0.5px solid rgba(253, 251, 247, 0.72);
+  border-radius: 72px 6px 72px 6px;
+  background: #000;
+}
+
+.video-frame-container,
+.video-preview,
+.youtube-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-preview img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Превью с градиентом (для how-to-glue) */
+.how-to-glue-hero {
+  background: #eadfd5;
+  box-shadow: inset 18px 24px 34px rgba(0, 0, 0, 0.12);
+}
+
+.how-to-glue-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(48, 73, 58, 0.45), rgba(48, 73, 58, 0.05));
+  pointer-events: none;
+}
+
+.how-to-glue-hero-caption {
+  position: absolute;
+  left: clamp(18px, 3vw, 36px);
+  right: clamp(18px, 3vw, 36px);
+  bottom: clamp(18px, 3vw, 34px);
+  z-index: 4;
+  display: grid;
+  gap: 8px;
+  max-width: 520px;
+  color: #fffaf2;
+}
+
+.how-to-glue-hero-caption span {
+  width: max-content;
+  padding: 7px 10px;
+  border-radius: 4px;
+  background: var(--brand-green, #556b60);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.how-to-glue-hero-caption strong {
+  font-size: clamp(20px, 3vw, 34px);
+  line-height: 1.12;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Кнопка Play */
+.play-button {
+  position: absolute;
+  width: clamp(60px, 6vw, 82px);
+  height: clamp(60px, 6vw, 82px);
+  top: 50%;
+  left: 50%;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  border: 0.5px solid rgba(253, 251, 247, 0.8);
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.2);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.play-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-left: 22px solid var(--surface, #fdfbf7);
+  border-bottom: 14px solid transparent;
+}
+
+.play-button:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  background: rgba(253, 251, 247, 0.3);
+}
+
+/* SVG-оверлей */
+.svg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lines-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========== КОНТЕНТ ========== */
+.how-to-paint-content-container {
+  width: min(1120px, calc(100% - (var(--page-inline, 32px) * 2)));
+  margin: 0 auto;
+  padding: 4px 0 40px;
+}
+
+.how-to-paint-content-wrapper {
+  display: grid;
+  gap: clamp(42px, 6vw, 86px);
+  counter-reset: instruction-step;
+}
+
+/* ========== СЕКЦИИ ========== */
+.how-to-paint-section {
+  counter-increment: instruction-step;
+  position: relative;
+  min-height: clamp(420px, 43vw, 640px);
+  display: grid;
+  grid-template-columns: minmax(200px, 0.52fr) minmax(0, 1fr);
+  column-gap: clamp(34px, 6vw, 92px);
+  align-items: start;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(44px, 6vw, 78px) clamp(34px, 6vw, 72px);
+  border: 0.5px solid rgba(85, 107, 96, 0.14);
+  border-radius: 76px 6px 120px 6px;
+  background: rgba(247, 247, 247, 0.74);
+}
+
+.how-to-paint-section::before {
+  content: counter(instruction-step, decimal-leading-zero) ' /';
+  position: absolute;
+  top: clamp(24px, 4vw, 56px);
+  left: min(50%, 520px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(115, 82, 52, 0.28);
+  font-family: 'Gothic A1', sans-serif;
+  font-size: clamp(76px, 10vw, 138px);
+  font-weight: 500;
+  line-height: 0.9;
+  pointer-events: none;
+}
+
+.how-to-paint-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+          radial-gradient(circle at 16% 24%, rgba(184, 76, 54, 0.06), transparent 22%),
+          radial-gradient(circle at 82% 88%, rgba(85, 107, 96, 0.06), transparent 28%);
+  pointer-events: none;
+}
+
+/* Иконка */
+.instruction-hero-icon {
+  position: relative;
+  z-index: 1;
+  width: min(260px, 24vw);
+  aspect-ratio: 0.78;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  color: var(--accent-red, #b84c36);
+  border: 1px solid rgba(184, 76, 54, 0.34);
+  border-right-width: 2px;
+  border-radius: 999px 8px 8px 999px;
+  background: rgba(253, 251, 247, 0.18);
+}
+
+.instruction-hero-icon::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(184, 76, 54, 0.25);
+  border-radius: 999px 7px 7px 999px;
+}
+
+.instruction-hero-icon svg {
+  position: relative;
+  z-index: 1;
+  width: 46%;
+  height: auto;
+}
+
+/* Текст */
+.instruction-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.how-to-paint-section-title {
+  position: relative;
+  z-index: 1;
+  margin: clamp(76px, 8vw, 124px) 0 22px;
+  color: var(--accent-red, #b84c36);
+  font-family: 'Gothic A1', sans-serif;
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 500;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.how-to-paint-section-title.green {
+  color: var(--accent-red, #b84c36);
+}
+
+.how-to-paint-subtitle {
+  margin: 24px 0 10px;
+  color: var(--brand-brown, #735234);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.how-to-paint-section-text {
+  position: relative;
+  z-index: 1;
+  color: var(--brand-brown, #735234);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+/* Списки */
+.how-to-paint-list,
+.how-to-paint-sublist,
+.how-to-paint-steps {
+  display: grid;
+  gap: 18px;
+  margin: 24px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.instruction-points {
+  display: grid;
+  gap: 16px;
+  margin: 26px 0;
+}
+
+.instruction-point {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.instruction-point-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  color: var(--accent-red, #b84c36);
+  border: 1px solid rgba(184, 76, 54, 0.42);
+  border-radius: 18px 4px 18px 4px;
+  background: rgba(253, 251, 247, 0.58);
+}
+
+.instruction-point-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.instruction-point-content {
+  min-height: 52px;
+  padding: 14px 18px;
+  border: 0.5px solid rgba(184, 76, 54, 0.18);
+  border-radius: 20px 4px 34px 4px;
+  background: rgba(253, 251, 247, 0.58);
+}
+
+.instruction-point-content strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--brand-brown, #735234);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.instruction-point-content p {
+  margin: 0;
+}
+
+/* Советы */
+.how-to-paint-warning,
+.how-to-paint-tip,
+.how-to-paint-final-note {
+  margin: 22px 0 0;
+  padding: 24px clamp(24px, 4vw, 54px);
+  border-radius: 34px 4px 86px 4px;
+  line-height: 1.55;
+}
+
+.how-to-paint-warning,
+.how-to-paint-tip {
+  border-left: 0;
+  background: var(--accent-red, #b84c36);
+  color: var(--surface, #fdfbf7);
+}
+
+.how-to-paint-warning strong,
+.how-to-paint-tip strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Финальный блок */
+.how-to-paint-final-note {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: clamp(52px, 7vw, 84px) clamp(28px, 6vw, 86px);
+  border: 0.5px solid rgba(85, 107, 96, 0.14);
+  border-radius: 76px 6px 120px 6px;
+  background: rgba(247, 247, 247, 0.74);
+  color: var(--brand-brown, #735234);
+  text-align: center;
+}
+
+.how-to-paint-final-note h3,
+.how-to-paint-final-note p {
+  margin: 0;
+}
+
+.how-to-paint-final-note h3 {
+  color: var(--accent-red, #b84c36);
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 500;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.how-to-paint-final-note p {
+  max-width: 760px;
+  margin: 24px auto 0;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.how-to-paint-final-note p + p {
+  margin-top: 12px;
+}
+
+/* Ссылка */
+.instruction-next-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: min(360px, 100%);
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 0 34px;
+  border-radius: 999px;
+  background: var(--brand-brown, #735234);
+  color: var(--surface, #fdfbf7);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.instruction-next-link:hover {
+  background: var(--accent-red, #b84c36);
+  transform: translateY(-1px);
+}
+
+/* ========== АДАПТИВ ========== */
+@media (max-width: 768px) {
+  .video-section {
+    width: calc(100% - 28px);
+    padding: 4px 0 0;
+  }
+
+  .video-container {
+    border-radius: 42px 5px 42px 5px;
+  }
+
+  .how-to-paint-page h1 {
+    font-size: 31px;
+  }
+
+  .how-to-paint-content-container {
+    width: calc(100% - 28px);
+  }
+
+  .how-to-paint-section {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding: 15px 20px;
+    border-radius: 46px 5px 72px 5px;
+  }
+
+  .how-to-paint-section::before {
+    top: 24px;
+    left: 20px;
+    font-size: 64px;
+  }
+
+  .how-to-paint-section::after {
+    display: block;
+  }
+
+  .instruction-hero-icon {
+    width: 80px;
+      justify-self: end;
+  }
+
+  .how-to-paint-section-title {
+    margin-top: 28px;
+    font-size: 28px;
+  }
+
+  .how-to-paint-section-text {
+    font-size: 15px;
+  }
+
+  .how-to-paint-list li,
+  .how-to-paint-sublist li,
+  .how-to-paint-steps li {
+    padding-left: 54px;
+  }
+
+  .instruction-point {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .instruction-point-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .instruction-point-icon svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .instruction-point-content {
+    padding: 12px 14px;
+  }
+
+  .how-to-paint-warning,
+  .how-to-paint-tip {
+    padding: 20px;
+    border-radius: 28px 4px 58px 4px;
+  }
+}

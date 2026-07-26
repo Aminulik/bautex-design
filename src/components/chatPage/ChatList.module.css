@@ -1,0 +1,169 @@
+.chat-list-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background-color: white;
+  border-right: 1px solid var(--lavand);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-header {
+  height: 90px;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--lavand);
+  background-color: var(--navy);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--cloud);
+}
+
+.chat-items-container {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--cloud);
+}
+
+.chat-item:hover {
+  background-color: var(--cloud);
+}
+
+.chat-item.active {
+  background-color: var(--color-background);
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-details {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.partner-name {
+  font-weight: bold;
+  color: var(--color-primary-blue);
+}
+
+.timestamp {
+  font-size: var(--font-size-xs);
+  color: var(--lavand);
+}
+
+.last-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-blue);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.chat-items-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-items-container::-webkit-scrollbar-track {
+  background: var(--cloud);
+}
+
+.chat-items-container::-webkit-scrollbar-thumb {
+  background: var(--cloud);
+  border-radius: 3px;
+}
+
+.chat-items-container::-webkit-scrollbar-thumb:hover {
+  background: var(--lavand);
+}
+
+/* Планшеты и ниже */
+@media (max-width: 1024px) {
+  .chat-list-sidebar {
+    width: 280px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+  .chat-list-sidebar {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    border-right: none;
+  }
+
+  .sidebar-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .chat-item {
+    padding: 1rem 1.25rem;
+  }
+
+  .partner-name {
+    font-size: var(--font-size-md);
+  }
+
+  .last-message {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 480px) {
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .timestamp {
+    font-size: 10px;
+  }
+
+  .chat-item {
+    gap: 0.75rem;
+  }
+}
+
+/* ===============================
+   Скрытие списка при активном чате (mobile)
+   =============================== */
+
+@media (max-width: 768px) {
+  .chat-list-sidebar[data-hidden='true'] {
+    display: none;
+  }
+}
