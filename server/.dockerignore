@@ -1,0 +1,8 @@
+node_modules
+.env
+orders.db
+results
+uploads
+debug
+temp
+*.log

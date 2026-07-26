@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkbautex_design=self.webpackChunkbautex_design||[]).push([[690],{1690(e,t,n){n.r(t),n.d(t,{default:()=>c});var s=n(6540),u=n(4552);const c=function(){return s.createElement(u.A,{collection:"kids"})}}}]);
+//# sourceMappingURL=690.6287fcf05285b70bc957.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkbautex_design=self.webpackChunkbautex_design||[]).push([[964],{2964(e,t,n){n.r(t),n.d(t,{default:()=>s});var u=n(6540),c=n(4552);const s=function(){return u.createElement(c.A,{collection:"loft"})}}}]);
+//# sourceMappingURL=964.8ee96cc591d839c2aef9.chunk.js.map

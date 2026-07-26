@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkbautex_design=self.webpackChunkbautex_design||[]).push([[315],{4315(e,n,t){t.r(n),t.d(n,{default:()=>a});var s=t(6540),u=t(4552);const a=function(){return s.createElement(u.A,{collection:"minimalism"})}}}]);
+//# sourceMappingURL=315.0c1cdd871aece00fdda1.chunk.js.map
