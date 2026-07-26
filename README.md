@@ -1,6 +1,6 @@
 # BauTex Design — каталог и визуализация обоев
 
-**BauTex Design** — full-stack веб-приложение для выбора обоев и их предварительной визуализации в интерьере. Пользователь может изучить каталог, подобрать цвет и фактуру, сохранить товары в избранное или корзину, а затем загрузить фото комнаты и увидеть результат наложения обоев.
+**BauTex Design** — полноценное веб-приложение для выбора обоев и их предварительной визуализации в интерьере. Пользователь может изучить каталог, подобрать цвет и фактуру, сохранить товары в избранное или корзину, а затем загрузить фото комнаты и увидеть результат наложения обоев.
 
 ## ✨ Что реализовано
 
@@ -21,8 +21,8 @@
 
 ## 🧰 Стек
 
-- **Frontend:** React 19, TypeScript, Redux Toolkit, React Router, Webpack.
-- **Backend:** Node.js, Express, SQLite, JWT, Multer.
+- **Клиентская часть:** React 19, TypeScript, Redux Toolkit, React Router, Webpack.
+- **Серверная часть:** Node.js, Express, SQLite, JWT, Multer.
 - **ML-сервис:** FastAPI, SegFormer B0, Pillow/OpenCV-совместимый пайплайн обработки изображений.
 - **Инфраструктура:** Docker Compose; отдельные контейнеры для frontend, API и ML.
 
@@ -45,195 +45,195 @@ npm run demo:up
 
 Полный сценарий демонстрации находится в [DEMO.md](./DEMO.md).
 
-## Requirements
+## Требования
 
 - Node.js 22+
 - npm
 
-## Frontend
+## Запуск клиентской части
 
-Install dependencies from the repository root:
+Установите зависимости из корня проекта:
 
 ```bash
 npm install
 ```
 
-Run the development server on `http://localhost:3001`:
+Запустите сервер разработки на `http://localhost:3001`:
 
 ```bash
 npm start
 ```
 
-Create a production build:
+Чтобы собрать production-версию:
 
 ```bash
 npm run build
 ```
 
-The production frontend uses `/bautex-design/` as `publicPath` for GitHub Pages deployment.
+Для публикации на GitHub Pages production-сборка использует `/bautex-design/` как `publicPath`.
 
-## Backend
+## Запуск серверной части
 
-The only active backend is the Express app in `server`.
+Сервер реализован на Express и находится в директории `server`.
 
-Install backend dependencies:
+Установите серверные зависимости:
 
 ```bash
 npm --prefix server install
 ```
 
-Create `server/.env` from `server/.env.example`, then run:
+Создайте `server/.env` на основе `server/.env.example`, затем выполните:
 
 ```bash
 npm run server:start
 ```
 
-For development with reloads:
+Для разработки с автоматической перезагрузкой:
 
 ```bash
 npm run server:dev
 ```
 
-Default ports:
+Стандартные адреса:
 
-- Frontend: `http://localhost:3001`
-- Backend: `http://localhost:3003`
-- Health check: `http://localhost:3003/health`
+- клиентская часть: `http://localhost:3001`;
+- серверная часть: `http://localhost:3003`;
+- health-check: `http://localhost:3003/health`.
 
-## Local SegFormer Service
+## Локальный ML-сервис SegFormer
 
-The diploma visualization flow can use a local FastAPI ML service:
+Для визуализации используется локальный ML-сервис на FastAPI:
 
 ```text
 React -> Express /api/visualize -> FastAPI SegFormer -> wall mask -> wallpaper composite
 ```
 
-Install Python dependencies:
+Установите Python-зависимости:
 
 ```bash
 npm run ml:install
 ```
 
-Run the ML service on `http://localhost:8000`:
+Запустите ML-сервис на `http://localhost:8000`:
 
 ```bash
 npm run ml:start
 ```
 
-Set this in `server/.env`, then restart the backend:
+Добавьте в `server/.env` следующую переменную и перезапустите сервер:
 
 ```env
 SEGFORMER_API_URL=http://localhost:8000/segment/wall
 ```
 
-The first segmentation request downloads and loads `nvidia/segformer-b0-finetuned-ade-512-512`, so it can take longer than later requests.
+При первом запросе загружается модель `nvidia/segformer-b0-finetuned-ade-512-512`, поэтому он может выполняться дольше последующих.
 
-Evaluate segmentation quality on a local diploma dataset:
+Чтобы оценить качество сегментации на локальном тестовом наборе:
 
 ```bash
 npm run ml:evaluate
 ```
 
-Put test photos into `test_data/segmentation/images` and manually prepared wall masks into `test_data/segmentation/masks_gt`.
+Поместите исходные фото в `test_data/segmentation/images`, а подготовленные вручную маски стен — в `test_data/segmentation/masks_gt`.
 
-## Docker
+## Запуск через Docker
 
-Run frontend, backend, and the local ML service together:
+Чтобы запустить клиентскую часть, API и ML-сервис одной командой:
 
 ```bash
 npm run docker:up
 ```
 
-For a diploma defense/demo, the same command is also available as:
+Для демонстрации проекта доступна более говорящая команда:
 
 ```bash
 npm run demo:up
 ```
 
-Stop containers:
+Остановить контейнеры:
 
 ```bash
 npm run docker:down
 ```
 
-Follow logs:
+Посмотреть логи:
 
 ```bash
 npm run docker:logs
 ```
 
-Show container status:
+Проверить статус контейнеров:
 
 ```bash
 npm run docker:ps
 ```
 
-Remove containers and volumes for a clean local state:
+Удалить контейнеры и тома для чистого запуска:
 
 ```bash
 npm run docker:clean
 ```
 
-Default Docker ports are the same as local development: frontend `3001`, backend `3003`, ML service `8000`.
+Порты Docker совпадают с локальными: клиентская часть — `3001`, API — `3003`, ML-сервис — `8000`.
 
-See `DEMO.md` for the recommended defense scenario, test accounts, and ML dataset structure.
+В [DEMO.md](./DEMO.md) описаны сценарий демонстрации, тестовые учётные записи и структура ML-датасета.
 
-Default Docker admin credentials:
+Учётная запись администратора для Docker:
 
-- Email: `admin@example.com`
-- Password: `admin12345`
+- email: `admin@example.com`;
+- пароль: `admin12345`.
 
-## Project Doctor
+## Самопроверка проекта
 
-Before a diploma demo, run:
+Перед демонстрацией проекта выполните:
 
 ```bash
 npm run doctor
 ```
 
-It checks frontend, backend, ML service, important files, Docker config, ports, and the local ML test dataset.
+Скрипт проверит доступность клиентской и серверной частей, ML-сервиса, конфигурации Docker, портов и локального тестового набора.
 
-For a shorter API-only smoke check:
+Для короткой проверки API:
 
 ```bash
 npm run smoke
 ```
 
-## Environment
+## Переменные окружения
 
-Do not commit local `.env` files. Use `server/.env.example` as the backend template.
+Не добавляйте локальные `.env`-файлы в Git. В качестве шаблона для сервера используйте `server/.env.example`.
 
-Important backend variables:
+Основные серверные переменные:
 
 - `PORT`
 - `FRONTEND_ORIGIN`
 - `JWT_SECRET`
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
-- optional API keys used by chat or visualization integrations
+- необязательные API-ключи для чата и сервисов визуализации.
 
-## Repository Hygiene
+## Состав репозитория
 
-The repository should not track generated or local runtime files:
+В репозиторий не должны попадать генерируемые и локальные файлы:
 
 - `dist/`, `build/`
 - `.idea/`, `.vscode/`
 - `.env`, `server/.env`
 - SQLite databases such as `server/orders.db`
 - backend runtime folders such as `server/debug/`, `server/results/`, `server/uploads/`, `server/temp/`
-- `node_modules/` in the root or `server`
+- `node_modules/` в корне проекта и в `server`.
 
-## Diploma ML Notes
+## Примечание о ML-части
 
-The implemented production path is local FastAPI + SegFormer B0. For the report, it is enough to compare other architectures theoretically if the implemented project includes:
+В рабочем варианте реализована связка локального FastAPI и SegFormer B0. Для проектной документации альтернативные архитектуры можно сравнить теоретически, если в приложении есть:
 
-- one working neural segmentation pipeline;
-- one fallback method for comparison;
-- manual correction;
-- a small test dataset;
-- metrics such as IoU, Dice, Precision, and Recall.
+- один работающий нейросетевой конвейер сегментации;
+- резервный метод для сравнения;
+- ручная коррекция;
+- небольшой тестовый набор;
+- метрики IoU, Dice, Precision и Recall.
 
-Recommended theoretical alternatives for the diploma comparison:
+Для теоретического сравнения можно использовать:
 
 - U-Net;
 - DeepLabV3+;
@@ -243,4 +243,4 @@ Recommended theoretical alternatives for the diploma comparison:
 - OneFormer;
 - YOLOv8-seg.
 
-Implementing every alternative is not required for a practical diploma prototype and would significantly increase scope, dependencies, and hardware requirements.
+Реализовывать каждую из альтернатив для практического прототипа не требуется: это существенно увеличит объём проекта, количество зависимостей и требования к оборудованию.
