@@ -1,21 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import './Visualization.css';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import wallpaperSoftPlaster from '../../assets/fabrics/basic/wallpaper-soft-plaster.jpg';
-import wallpaperBotanicalLine from '../../assets/fabrics/basic/wallpaper-soft-plaster.jpg';
-import wallpaperBotanicalGray from '../../assets/fabrics/basic/wallpaper-soft-plaster.jpg';
-import wallpaperReliefStone from '../../assets/fabrics/basic/wallpaper-soft-plaster.jpg';
-import wallpaperAbstractRelief from '../../assets/fabrics/basic/wallpaper-soft-plaster.jpg';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import type { CartItem } from '../../store/cartSlice';
 import { CATALOG_ITEMS, type CatalogItem, type ProductColor } from '../../data/catalogItems';
-
-interface Wallpaper {
-  id: string;
-  name: string;
-  url: string;
-}
 
 interface ProcessingInfo {
   method: string;
@@ -91,26 +80,6 @@ const RENDER_OPTIONS: Array<{
   },
 ];
 
-const DEFAULT_WALLPAPERS: Wallpaper[] = [
-  { id: '1', name: 'Soft plaster', url: wallpaperSoftPlaster },
-  { id: '2', name: 'Botanical line', url: wallpaperBotanicalLine },
-  { id: '3', name: 'Gray botanical', url: wallpaperBotanicalGray },
-  { id: '4', name: 'Stone relief', url: wallpaperReliefStone },
-  { id: '5', name: 'Abstract relief', url: wallpaperAbstractRelief },
-];
-
-const getWallpaperImageUrl = (url: string) => {
-  if (
-    url.startsWith('http') ||
-    url.startsWith('data:') ||
-    url.startsWith('/static/') ||
-    url.startsWith('/images/')
-  ) {
-    return url;
-  }
-
-  return `${API_BASE_URL}${url}`;
-};
 const cartKey = (item: CartItem) => `${item.productId}::${item.color}`;
 const favoriteKey = (productId: string) => `favorite::${productId}`;
 
@@ -158,7 +127,6 @@ const Visualization: React.FC = () => {
   const [processingInfo, setProcessingInfo] = useState<ProcessingInfo | null>(null);
   const [showManualRetry, setShowManualRetry] = useState(false);
   const [photoWarnings, setPhotoWarnings] = useState<string[]>([]);
-  const [wallpapers, setWallpapers] = useState<Wallpaper[]>(DEFAULT_WALLPAPERS);
   const [supportStatus, setSupportStatus] = useState('');
   // НОВЫЕ состояния для корзины
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -175,15 +143,6 @@ const Visualization: React.FC = () => {
   const maskCanvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const isDrawingRef = useRef(false);
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/wallpapers`)
-      .then((response) => (response.ok ? response.json() : []))
-      .then((data: Wallpaper[]) => {
-        if (data.length > 0) setWallpapers(data);
-      })
-      .catch(() => setWallpapers(DEFAULT_WALLPAPERS));
-  }, []);
 
   // НОВОЕ: синхронизация выбора корзины
   useEffect(() => {
@@ -1156,33 +1115,6 @@ const Visualization: React.FC = () => {
       return <span className='quality-badge quality-medium'>Среднее качество</span>;
     }
     return null;
-  };
-
-  const getVisualizationExplanation = () => {
-    if (!processingInfo) return null;
-
-    const maskText =
-      typeof processingInfo.maskCoverage === 'number'
-        ? `Маска занимает ${Math.round(processingInfo.maskCoverage * 100)}% изображения.`
-        : 'Маска показана отдельно, белая область считается стеной.';
-
-    const segmentationText =
-      processingInfo.method === 'segformer-wall'
-        ? 'Сегментация выполнена нейросетью SegFormer B0: модель нашла пиксели класса wall.'
-        : processingInfo.method === 'manual-mask'
-          ? 'Использована ручная маска: пользователь кистью указал область стены.'
-          : 'Использован fallback: локальная эвристика или ручная коррекция вместо полноценной ML-маски.';
-
-    const fallbackText = processingInfo.autoFallbackUsed
-      ? 'Система отметила результат как спорный и предложила ручную коррекцию.'
-      : 'Результат не требует обязательной ручной коррекции, но ее можно применить для улучшения границ.';
-
-    return {
-      segmentationText,
-      maskText,
-      fallbackText,
-      renderText: `Наложение выполнено в режиме ${processingInfo.renderMode}: выбранные обои повторяются паттерном и смешиваются с исходным фото.`,
-    };
   };
 
   const handleReportVisualizationIssue = async () => {

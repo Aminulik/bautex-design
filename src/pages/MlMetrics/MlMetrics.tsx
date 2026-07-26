@@ -24,47 +24,52 @@ const API_URL = (process.env.API_BASE_URL || '/api') as string;
 const formatMetric = (value?: number) =>
   typeof value === 'number' && Number.isFinite(value) ? value.toFixed(3) : 'н/д';
 
-const formatPercent = (value?: number) =>
-  typeof value === 'number' && Number.isFinite(value) ? `${Math.round(value * 100)}%` : 'н/д';
-
 const getMetricRating = (key: string, value?: number): { label: string; color: string } => {
   if (!value && value !== 0) return { label: 'Нет данных', color: '#999' };
 
   const thresholds: Record<string, { excellent: number; good: number }> = {
     IoU: { excellent: 0.75, good: 0.65 },
     Dice: { excellent: 0.85, good: 0.75 },
-    Precision: { excellent: 0.85, good: 0.70 },
-    Recall: { excellent: 0.85, good: 0.70 },
+    Precision: { excellent: 0.85, good: 0.7 },
+    Recall: { excellent: 0.85, good: 0.7 },
   };
 
-  const t = thresholds[key] || { excellent: 0.80, good: 0.70 };
+  const t = thresholds[key] || { excellent: 0.8, good: 0.7 };
   if (value >= t.excellent) return { label: 'Отлично', color: '#28a745' };
   if (value >= t.good) return { label: 'Хорошо', color: '#47624d' };
   return { label: 'Требует улучшения', color: '#b84c36' };
 };
 
-const metricExplanations: Record<string, { title: string; description: string; example: string }> = {
-  IoU: {
-    title: 'Intersection over Union',
-    description: 'Показывает, насколько точно модель выделила стены. Если IoU = 1 — идеальное совпадение с эталоном. Если 0 — модель ошиблась полностью.',
-    example: 'IoU = 0.77 значит, что площадь пересечения маски модели и эталонной маски составляет 77% от площади их объединения.',
-  },
-  Dice: {
-    title: 'Dice Coefficient (F1-мера)',
-    description: 'Среднее гармоническое между точностью и полнотой. Хорошо работает даже когда стены занимают мало места на фото.',
-    example: 'Dice = 0.87 значит, что модель одинаково хорошо и находит стены, и не захватывает лишнего.',
-  },
-  Precision: {
-    title: 'Точность выделения',
-    description: 'Какая доля пикселей, которые модель пометила как стену, действительно являются стеной. Высокая точность = модель не красит лишнего.',
-    example: 'Precision = 0.82 значит, что 82% того, что модель назвала стеной — действительно стена.',
-  },
-  Recall: {
-    title: 'Полнота выделения',
-    description: 'Какую долю от настоящей стены модель смогла найти. Высокий recall = модель находит почти всю стену.',
-    example: 'Recall = 0.93 значит, что модель нашла 93% площади реальной стены.',
-  },
-};
+const metricExplanations: Record<string, { title: string; description: string; example: string }> =
+  {
+    IoU: {
+      title: 'Intersection over Union',
+      description:
+        'Показывает, насколько точно модель выделила стены. Если IoU = 1 — идеальное совпадение с эталоном. Если 0 — модель ошиблась полностью.',
+      example:
+        'IoU = 0.77 значит, что площадь пересечения маски модели и эталонной маски составляет 77% от площади их объединения.',
+    },
+    Dice: {
+      title: 'Dice Coefficient (F1-мера)',
+      description:
+        'Среднее гармоническое между точностью и полнотой. Хорошо работает даже когда стены занимают мало места на фото.',
+      example:
+        'Dice = 0.87 значит, что модель одинаково хорошо и находит стены, и не захватывает лишнего.',
+    },
+    Precision: {
+      title: 'Точность выделения',
+      description:
+        'Какая доля пикселей, которые модель пометила как стену, действительно являются стеной. Высокая точность = модель не красит лишнего.',
+      example:
+        'Precision = 0.82 значит, что 82% того, что модель назвала стеной — действительно стена.',
+    },
+    Recall: {
+      title: 'Полнота выделения',
+      description:
+        'Какую долю от настоящей стены модель смогла найти. Высокий recall = модель находит почти всю стену.',
+      example: 'Recall = 0.93 значит, что модель нашла 93% площади реальной стены.',
+    },
+  };
 
 const MlMetrics: React.FC = () => {
   const [data, setData] = useState<MlMetricsData | null>(null);
@@ -89,19 +94,21 @@ const MlMetrics: React.FC = () => {
           Качество выделения стен
         </h1>
         <p style={{ fontSize: 17, lineHeight: 1.55, color: '#4b4b46' }}>
-          Мы постоянно измеряем, насколько точно нейросеть SegFormer находит стены на фото.
-          Эти метрики обновляются при каждом запуске оценки и показывают реальное качество
+          Мы постоянно измеряем, насколько точно нейросеть SegFormer находит стены на фото. Эти
+          метрики обновляются при каждом запуске оценки и показывают реальное качество
           автоматического выделения стен.
         </p>
       </section>
 
       {/* Карточки с данными */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: 14,
-        marginTop: 26,
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 14,
+          marginTop: 26,
+        }}
+      >
         <article style={cardStyle}>
           <strong>{data?.dataset.imagesCount ?? 0}</strong>
           <span>тестовых фото</span>
@@ -125,15 +132,18 @@ const MlMetrics: React.FC = () => {
           <h2 style={headingStyle}>Результаты последней оценки</h2>
           <p style={{ color: '#735234', marginBottom: 16 }}>
             На основе {data?.latest?.imagesCount || 0} тестовых фото
-            {data?.latest?.createdAt && ` · ${new Date(data.latest.createdAt).toLocaleDateString('ru-RU')}`}
+            {data?.latest?.createdAt &&
+              ` · ${new Date(data.latest.createdAt).toLocaleDateString('ru-RU')}`}
           </p>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 12,
-            marginBottom: 24,
-          }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 12,
+              marginBottom: 24,
+            }}
+          >
             {[
               { key: 'IoU', value: data?.latest?.meanIoU },
               { key: 'Dice', value: data?.latest?.meanDice },
@@ -142,12 +152,7 @@ const MlMetrics: React.FC = () => {
             ].map(({ key, value }) => {
               const rating = getMetricRating(key, value);
               return (
-                <MetricCard
-                  key={key}
-                  label={key}
-                  value={formatMetric(value)}
-                  rating={rating}
-                />
+                <MetricCard key={key} label={key} value={formatMetric(value)} rating={rating} />
               );
             })}
           </div>
@@ -160,18 +165,27 @@ const MlMetrics: React.FC = () => {
 
               return (
                 <div key={key} style={explanationCardStyle}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: 8,
+                    }}
+                  >
                     <h3 style={{ margin: 0, color: '#30493a', fontSize: 18 }}>
                       {key} — {explanation.title}
                     </h3>
-                    <span style={{
-                      padding: '4px 12px',
-                      borderRadius: 12,
-                      background: rating.color,
-                      color: '#fff',
-                      fontSize: 13,
-                      fontWeight: 700,
-                    }}>
+                    <span
+                      style={{
+                        padding: '4px 12px',
+                        borderRadius: 12,
+                        background: rating.color,
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: 700,
+                      }}
+                    >
                       {formatMetric(value as number)} — {rating.label}
                     </span>
                   </div>
@@ -200,8 +214,8 @@ const MlMetrics: React.FC = () => {
             <li>SegFormer получает качественные входные изображения</li>
           </ul>
           <p style={{ marginTop: 8 }}>
-            Для пересчета метрик добавьте фото в <code>test_data/segmentation/images/</code>,
-            маски в <code>test_data/segmentation/masks_gt/</code> и запустите оценку.
+            Для пересчета метрик добавьте фото в <code>test_data/segmentation/images/</code>, маски
+            в <code>test_data/segmentation/masks_gt/</code> и запустите оценку.
           </p>
         </div>
       </section>
@@ -213,8 +227,8 @@ const DatasetEmptyState: React.FC = () => (
   <section style={{ ...panelStyle, marginTop: 24, background: '#f7f8f4' }}>
     <h2 style={headingStyle}>Тестовый набор пока пустой</h2>
     <p style={{ color: '#4b4b46', lineHeight: 1.55 }}>
-      Чтобы получить реальные метрики качества, добавьте пары файлов: фото комнаты и эталонную маску стены.
-      Маска должна быть черно-белой: белая область — стена, черная — всё остальное.
+      Чтобы получить реальные метрики качества, добавьте пары файлов: фото комнаты и эталонную маску
+      стены. Маска должна быть черно-белой: белая область — стена, черная — всё остальное.
     </p>
     <div style={{ display: 'grid', gap: 8, marginTop: 12 }}>
       <code>test_data/segmentation/images/room_001.jpg</code>
@@ -251,18 +265,24 @@ const explanationCardStyle: React.CSSProperties = {
   background: '#fffcf8',
 };
 
-const MetricCard: React.FC<{ label: string; value: string; rating: { label: string; color: string } }> = ({ label, value, rating }) => (
+const MetricCard: React.FC<{
+  label: string;
+  value: string;
+  rating: { label: string; color: string };
+}> = ({ label, value, rating }) => (
   <div style={{ ...cardStyle, background: '#f7f8f4' }}>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <span style={{ color: '#735234', fontWeight: 700 }}>{label}</span>
-      <span style={{
-        padding: '2px 8px',
-        borderRadius: 10,
-        background: rating.color,
-        color: '#fff',
-        fontSize: 11,
-        fontWeight: 700,
-      }}>
+      <span
+        style={{
+          padding: '2px 8px',
+          borderRadius: 10,
+          background: rating.color,
+          color: '#fff',
+          fontSize: 11,
+          fontWeight: 700,
+        }}
+      >
         {rating.label}
       </span>
     </div>

@@ -439,8 +439,12 @@ const OrderForm: React.FC = () => {
                       <span
                         className='cart-preview-color-overlay'
                         style={{
-                          backgroundColor: item.product.colors?.find(c => c.name === item.color)?.hex || '#d8c3a5',
-                          opacity: item.product.colors?.find(c => c.name === item.color)?.intensity || 0.35,
+                          backgroundColor:
+                            item.product.colors?.find((c) => c.name === item.color)?.hex ||
+                            '#d8c3a5',
+                          opacity:
+                            item.product.colors?.find((c) => c.name === item.color)?.intensity ||
+                            0.35,
                         }}
                       />
                     </div>
