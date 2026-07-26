@@ -4,6 +4,7 @@ import type { AppDispatch, RootState } from '../../store';
 import { logout } from '../../store/authSlice';
 import { fetchFavorites } from '../../store/favoritesSlice';
 import { CATALOG_ITEMS, PRODUCT_COLORS, type CatalogItem } from '../../data/catalogItems';
+import StaticDemoNotice from '../../components/StaticDemoNotice';
 import '../../styles/app.css';
 import { removeFromCart, type CartItem } from '../../store/cartSlice';
 
@@ -644,6 +645,10 @@ const Account: React.FC = () => {
       <div className='container account-page'>
         <h1>Личный кабинет</h1>
         <p>Войдите или зарегистрируйтесь, чтобы видеть заказы, корзину и визуализации.</p>
+        <StaticDemoNotice
+          feature='Регистрация и вход'
+          hint='Учётные записи, заказы и обращения живут в SQLite на стороне Express, а авторизация идёт по JWT — без сервера войти некуда.'
+        />
       </div>
     );
   }

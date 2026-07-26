@@ -15,12 +15,14 @@
     rel="stylesheet"
   />
 
-  <!-- Иконка -->
-  <link rel="icon" href="favicon.ico" />
+  <!-- Иконка подставляется html-webpack-plugin из src/assets/icon.png -->
 
-  <!-- Скрипты внешние -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="https://vk.com/js/api/openapi.js?169"></script>
+  <!--
+    Внешние скрипты отсюда убраны:
+    - YouTube iframe_api подгружает сам VideoPlayer, когда плеер реально нужен
+      (скрипт в <head> ещё и создавал гонку: window.YT появляется раньше, чем YT.Player);
+    - vk.com/js/api/openapi.js нигде в коде не использовался.
+  -->
 </head>
 <body>
 <noscript>Включите JavaScript для работы приложения.</noscript>

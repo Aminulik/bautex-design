@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { removeFromCart, updateCartQuantity } from '../store/cartSlice';
 import type { CartItem } from '../store/cartSlice';
+import StaticDemoNotice from './StaticDemoNotice';
 import '../styles/order-form.css';
 
 interface OrderFormData {
@@ -327,6 +328,10 @@ const OrderForm: React.FC = () => {
 
   return (
     <div className='order-form-container' id='order-form'>
+      <StaticDemoNotice
+        feature='Оформление заказа'
+        hint='Заявка сохраняется в базу на стороне Express и попадает в админ-панель, поэтому в статической версии отправить её некуда. Корзину при этом можно собрать — она хранится в браузере.'
+      />
       <form onSubmit={handleSubmit} className='order-form'>
         <div className='form-grid'>
           <div className='form-group'>

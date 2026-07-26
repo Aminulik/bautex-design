@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register, clearError } from '../store/authSlice';
 import type { AppDispatch, RootState } from '../store';
+import StaticDemoNotice from './StaticDemoNotice';
 
 interface Props {
   isOpen: boolean;
@@ -48,6 +49,8 @@ const LoginModal: React.FC<Props> = ({ isOpen, onClose }) => {
         </button>
 
         <h3>{isLogin ? 'Вход' : 'Регистрация'}</h3>
+
+        <StaticDemoNotice feature='Авторизация' />
 
         {error && <p className='privacy-policy'>{error}</p>}
 

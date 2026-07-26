@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import StaticDemoNotice from '../../components/StaticDemoNotice';
 import '../../styles/app.css';
 
 interface MlMetricsData {
@@ -93,6 +94,11 @@ const MlMetrics: React.FC = () => {
         <h1 style={{ color: '#30493a', fontSize: 42, margin: '0 0 14px' }}>
           Качество выделения стен
         </h1>
+
+        <StaticDemoNotice
+          feature='Страница ML-метрик'
+          hint='Метрики IoU, Dice, Precision и Recall считаются на локальном тестовом наборе командой npm run ml:evaluate и отдаются бэкендом, поэтому в статической версии цифр здесь не будет.'
+        />
         <p style={{ fontSize: 17, lineHeight: 1.55, color: '#4b4b46' }}>
           Мы постоянно измеряем, насколько точно нейросеть SegFormer находит стены на фото. Эти
           метрики обновляются при каждом запуске оценки и показывают реальное качество

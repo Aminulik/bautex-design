@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from './components/Header';
@@ -22,7 +22,6 @@ import './pages/Certificates/certificates.css';
 import './styles/location-map.css';
 import Reviews from './components/Reviews';
 import ScrollToTop from './components/ScrollToTop';
-import LoginModal from './components/LoginModal';
 import { fetchFavorites } from './store/favoritesSlice';
 import type { AppDispatch, RootState } from './store';
 import { ChatWidget } from './components/ChatWidget/ChatWidget';
@@ -52,6 +51,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy/PrivacyPolicy'));
 const AiChatPage = lazy(() =>
   import('./pages/AiChatPage/AiChatPage').then((module) => ({ default: module.AiChatPage }))
 );
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 
 const HomePage = () => (
   <main className='home-page'>
@@ -67,7 +67,6 @@ const HomePage = () => (
 );
 
 const App: React.FC = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
 
@@ -75,7 +74,10 @@ const App: React.FC = () => {
     dispatch(fetchFavorites());
   }, [user, dispatch]);
 
-  const basename = process.env.NODE_ENV === 'production' ? '/SberHab' : '';
+  // basename берётся из того же PUBLIC_PATH, что и publicPath сборки,
+  // поэтому роутер и пути к ассетам не могут разъехаться.
+  // '/' -> '', '/bautex-design/' -> '/bautex-design'
+  const basename = (process.env.PUBLIC_PATH || '/').replace(/\/+$/, '');
 
   return (
     <Router basename={basename} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -108,14 +110,13 @@ const App: React.FC = () => {
             <Route path='/where-to-buy' element={<WhereToBuy />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
             <Route path='/ai-chat' element={<AiChatPage />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </Suspense>
 
         <Footer />
         <ChatWidget />
       </div>
-
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </Router>
   );
 };

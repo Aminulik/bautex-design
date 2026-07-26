@@ -1,72 +1,72 @@
-# Demo Checklist
+# Сценарий демонстрации
 
-This file is the short defense/demo script for the BauTex Design diploma project.
+Этот файл поможет быстро показать функциональность дипломного проекта BauTex Design.
 
-## One-Command Start
+## Быстрый запуск
 
-From the project root:
+В корне проекта выполните:
 
 ```bash
 npm run demo:up
 ```
 
-Open:
+Откройте в браузере:
 
-- Frontend: http://localhost:3001
-- Backend health: http://localhost:3003/health
-- ML health: http://localhost:8000/health
-- ML metrics page: http://localhost:3001/ml-metrics
-- Visualization: http://localhost:3001/visualization
+- приложение: http://localhost:3001;
+- health-check API: http://localhost:3003/health;
+- health-check ML-сервиса: http://localhost:8000/health;
+- страница ML-метрик: http://localhost:3001/ml-metrics;
+- визуализация интерьера: http://localhost:3001/visualization.
 
-Stop the project:
+Чтобы остановить проект:
 
 ```bash
 npm run demo:down
 ```
 
-Remove Docker volumes if you need a completely clean local state:
+Чтобы удалить Docker-тома и запустить проект с чистого состояния:
 
 ```bash
 npm run docker:clean
 ```
 
-## Demo Accounts
+## Тестовые учётные записи
 
-Default Docker admin credentials:
+Учётная запись администратора для Docker:
 
 ```text
 Email: admin@example.com
-Password: admin12345
+Пароль: admin12345
 ```
 
-For a user flow, register a new account through the site interface.
+Для пользовательского сценария зарегистрируйте нового пользователя через интерфейс сайта.
 
-## Recommended Defense Scenario
+## Рекомендуемый сценарий показа
 
-1. Open the homepage and show navigation, catalog, collections, and where-to-buy map.
-2. Register or log in as a user.
-3. Open catalog or a collection, open a product modal, choose color and quantity.
-4. Add the product to cart and favorites.
-5. Open account page and show cart, favorites, orders, and saved visualization projects.
-6. Open visualization page.
-7. Upload a room photo, choose wallpaper, color, segmentation method, render mode, and print scale.
-8. Run visualization and show:
-   - before/after;
-   - wall mask preview;
-   - selected method and metrics;
-   - manual brush fallback/correction.
-9. Open `/visualization/how-it-works` and explain the pipeline:
+1. Откройте главную страницу: покажите навигацию, каталог, коллекции и карту точек продаж.
+2. Зарегистрируйтесь или войдите как пользователь.
+3. Откройте каталог или коллекцию, выберите товар, цвет и количество.
+4. Добавьте товар в корзину и избранное.
+5. Перейдите в личный кабинет: покажите корзину, избранное, заказы и сохранённые визуализации.
+6. Откройте страницу визуализации.
+7. Загрузите фото комнаты, выберите обои, цвет, метод сегментации, режим наложения и масштаб.
+8. Запустите визуализацию и покажите:
+   - исходное фото и результат;
+   - предварительный просмотр маски стены;
+   - выбранный метод и метрики;
+   - ручную корректировку маски кистью.
+9. Откройте `/visualization/how-it-works` и объясните конвейер:
 
 ```text
-photo -> SegFormer -> wall mask -> wallpaper texture + color -> manual correction
+фото → SegFormer → маска стены → текстура и цвет обоев → ручная коррекция
 ```
 
-10. Open `/ml-metrics` and explain IoU, Dice, Precision, and Recall.
-11. Log in as admin and show users, orders, statuses, support requests, and catalog management.
+10. Откройте `/ml-metrics` и расскажите о метриках IoU, Dice, Precision и Recall.
+11. Войдите как администратор и покажите пользователей, заказы, статусы, обращения и управление каталогом.
 
-## Test Photos For ML Metrics
+## Фото и маски для ML-метрик
 
-For the diploma metrics page, add paired files:
+Для страницы метрик добавляйте файлы парами:
 
 ```text
 test_data/segmentation/images/room_001.jpg
@@ -75,30 +75,30 @@ test_data/segmentation/images/room_002.jpg
 test_data/segmentation/masks_gt/room_002.png
 ```
 
-Rules:
+Правила:
 
-- file names must match before extension;
-- `images` contains original room photos;
-- `masks_gt` contains manually prepared wall masks;
-- mask white area means wall, black area means not wall;
-- 5-10 pairs are enough for a diploma prototype demo;
-- include different cases: empty wall, furniture, window/door, decor on wall, angled photo.
+- имена файлов должны совпадать до расширения;
+- в `images` хранятся исходные фото комнат;
+- в `masks_gt` — подготовленные вручную маски стен;
+- белая область маски обозначает стену, чёрная — всё остальное;
+- для дипломного прототипа достаточно 5–10 пар;
+- добавляйте разные случаи: пустая стена, мебель, окно или дверь, декор, фото под углом.
 
-Run evaluation:
+Запустите оценку:
 
 ```bash
 npm run ml:evaluate
 ```
 
-Then open:
+После этого откройте:
 
 ```text
 http://localhost:3001/ml-metrics
 ```
 
-## If Ports Are Busy
+## Если порты заняты
 
-Docker usually handles this after `npm run demo:down`. For local processes on Windows:
+Обычно Docker освобождает порты после `npm run demo:down`. Для локальных процессов в Windows можно выполнить:
 
 ```powershell
 $ports = @(3001, 3003, 8000)

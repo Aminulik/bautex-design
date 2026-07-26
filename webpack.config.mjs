@@ -15,10 +15,23 @@ const frontendPort = Number(process.env.FRONTEND_PORT || 3001);
 const apiProxyTarget = process.env.API_PROXY_TARGET || apiBaseUrl || 'http://localhost:3003';
 const yandexMapsApiKey =
   process.env.REACT_APP_YANDEX_MAPS_API_KEY || '0ac10ed4-b4d8-4d4f-bcfa-9f4150ca70e6';
+
+// Базовый путь, по которому сайт отдаётся в production.
+// По умолчанию '/bautex-design/' — project page на GitHub Pages,
+// то есть https://aminulik.github.io/bautex-design/.
+// Для сайта в корне домена достаточно задать PUBLIC_PATH=/ — код менять не нужно.
+const rawPublicPath = process.env.PUBLIC_PATH || '/bautex-design/';
+const normalizedPublicPath = rawPublicPath.endsWith('/') ? rawPublicPath : `${rawPublicPath}/`;
+
 export default (_env, argv) => {
   const mode = argv.mode || process.env.NODE_ENV || 'development';
   const isDevelopment = mode !== 'production';
   const clientApiBaseUrl = isDevelopment ? '/api' : apiBaseUrl ? `${apiBaseUrl}/api` : '/api';
+  const publicPath = isDevelopment ? '/' : normalizedPublicPath;
+
+  // Статическое демо: production-сборка без адреса бэкенда (GitHub Pages и т.п.).
+  // Как только задан REACT_APP_API_URL, флаг сам выключается.
+  const isStaticDemo = !isDevelopment && !apiBaseUrl;
 
   return {
   mode: isDevelopment ? 'development' : 'production',
@@ -32,7 +45,7 @@ export default (_env, argv) => {
     filename: isDevelopment ? '[name].js' : '[name].[contenthash].js',
     chunkFilename: isDevelopment ? '[name].chunk.js' : '[name].[contenthash].chunk.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: isDevelopment ? '/' : '/bautex-design/',
+    publicPath,
     clean: true,
   },
   devServer: {
@@ -205,11 +218,23 @@ export default (_env, argv) => {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+      favicon: './src/assets/icon.png',
     }),
+    // GitHub Pages не умеет отдавать index.html на произвольный путь.
+    // Копия под именем 404.html делает так, что прямые ссылки и F5
+    // на внутренних страницах (/catalog, /about/company) открываются, а не падают.
+    !isDevelopment &&
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: '404.html',
+        favicon: './src/assets/icon.png',
+      }),
     new webpack.DefinePlugin({
       'process.env.REACT_APP_API_URL': JSON.stringify(apiBaseUrl),
       'process.env.API_BASE_URL': JSON.stringify(clientApiBaseUrl),
       'process.env.REACT_APP_YANDEX_MAPS_API_KEY': JSON.stringify(yandexMapsApiKey),
+      'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
+      'process.env.STATIC_DEMO': JSON.stringify(isStaticDemo ? 'true' : ''),
     }),
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),

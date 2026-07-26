@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import './Visualization.css';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import StaticDemoNotice from '../../components/StaticDemoNotice';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import type { CartItem } from '../../store/cartSlice';
@@ -1165,8 +1167,13 @@ const Visualization: React.FC = () => {
         <h1 className='visualization-title'>Визуализация интерьера</h1>
         <p className='visualization-description'>
           Загрузите фото комнаты, выберите обои, способ выделения стены и режим наложения.{' '}
-          <a href='/visualization/how-it-works'>Как это работает</a>
+          <Link to='/visualization/how-it-works'>Как это работает</Link>
         </p>
+
+        <StaticDemoNotice
+          feature='Визуализация обоев'
+          hint='Наложение обоев считает FastAPI с моделью SegFormer B0 — она разбирает фото комнаты и выделяет стены, поэтому без запущенного сервиса результат получить нельзя.'
+        />
 
         <div className='visualization-layout'>
           <div className='visualization-form'>

@@ -314,9 +314,9 @@ const LocationMap: React.FC = () => {
     []
   );
 
-  const isOnOrderPage =
-    location.pathname === '/where-to-buy' || location.pathname === '/SberHab/where-to-buy';
-  const isHomePage = location.pathname === '/' || location.pathname === '/SberHab/';
+  // useLocation отдаёт путь уже без basename, поэтому сравниваем с чистыми маршрутами.
+  const isOnOrderPage = location.pathname === '/where-to-buy';
+  const isHomePage = location.pathname === '/';
 
   const zoomToCity = useCallback((city: string) => {
     const cityLocations = locations.filter((point) => point.city === city);

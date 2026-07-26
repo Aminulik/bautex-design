@@ -3,6 +3,7 @@ import { useAiChatStore } from '../../store/aiChatStore';
 import { ChatMessage } from '../../components/chatPage/ChatMessage';
 import { MessageInput } from '../../components/chatPage/MessageInput';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import StaticDemoNotice from '../../components/StaticDemoNotice';
 import styles from './AiChatPage.module.css';
 
 export const AiChatPage: React.FC = () => {
@@ -25,6 +26,12 @@ export const AiChatPage: React.FC = () => {
     <main className={styles.page}>
       <div className='container'>
         <Breadcrumbs currentPage='Помощник по обоям' />
+
+        <StaticDemoNotice
+          feature='AI-чат'
+          hint='Ответы генерирует бэкенд: он ходит во внешние API по ключам из server/.env, поэтому в статической версии переписка не отправляется.'
+        />
+
         <div className={styles['chat-layout']}>
           <section className={styles['chat-container']}>
             <div className={styles['chat-header']}>

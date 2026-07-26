@@ -1,0 +1,64 @@
+.not-found-page {
+  padding-top: clamp(60px, 10vw, 140px);
+  padding-bottom: clamp(60px, 10vw, 140px);
+  text-align: center;
+}
+
+.not-found-code {
+  margin: 0;
+  font-size: clamp(72px, 16vw, 160px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brand-clay);
+}
+
+.not-found-page h1 {
+  margin: 12px 0 0;
+  font-size: clamp(26px, 4vw, 42px);
+  color: var(--brand-green-dark);
+}
+
+.not-found-text {
+  max-width: 520px;
+  margin: 16px auto 0;
+  color: var(--brand-green);
+  line-height: 1.6;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.not-found-button {
+  display: inline-block;
+  padding: 13px 28px;
+  border: 1px solid var(--brand-green-dark);
+  border-radius: 999px;
+  background: var(--brand-green-dark);
+  color: var(--surface);
+  font-size: 15px;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.not-found-button:hover {
+  background: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.not-found-button--ghost {
+  background: transparent;
+  color: var(--brand-green-dark);
+}
+
+.not-found-button--ghost:hover {
+  background: var(--surface-soft);
+  border-color: var(--brand-green-dark);
+  color: var(--brand-green-dark);
+}
